@@ -16,7 +16,7 @@ class APIError extends Error {
     this.name = this.constructor.name;
     this.message = message || 'Internal Server Error';
     this.errors = errors;
-    this.status = status || httpStatus.INTERNAL_SERVER_ERROR;
+    this.code = status || httpStatus.INTERNAL_SERVER_ERROR;
     this.isPublic = isPublic || false;
     this.stack = stack || new Error(message).stack;
   }

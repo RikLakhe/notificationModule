@@ -1,5 +1,5 @@
 [
     "NODE_ENV",
     "PORT",
-    "LOGGER"    
+    "is_debug"    
 ]

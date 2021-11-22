@@ -9,9 +9,10 @@ const logger = require('../../config/logger');
  */
 const handler = (err, req, res, next) => {
   const response = {
-    code: err.status,
-    message: err.message || httpStatus[err.status],
+    code: err.status || 500,
+    message: err.message || httpStatus[err.status || 500],
     errors: err.errors,
+    timeStamp: new Date().toISOString(),
     stack: err.stack,
   };
 
@@ -23,7 +24,7 @@ const handler = (err, req, res, next) => {
     logger.error(response);
   }
 
-  res.status(err.status);
+  res.status(err.status || 500);
   res.json(response);
 };
 
