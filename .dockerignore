@@ -13,3 +13,4 @@ Dockerfile
 .gitlab-ci.yml
 
 pass.json
+serviceAccountKey.json
