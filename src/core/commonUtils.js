@@ -1,10 +1,16 @@
-const bodyManipulation = (text, keyValue) => {
-  let result = text;
+/*
+* Message body manipulation
+* @param {string} text
+* @param {object} keyValueObject
+* @return {string}
+*/
+const bodyManipulation = (text, keyValueObject) => {
+  let result = Buffer.from(text,'base64').toString('ascii');
 
-  if (keyValue && keyValue.length > 0 && keyValue instanceof Array) {
-    keyValue.forEach((keyValueItem) => {
-      const tempRegex = new RegExp(`${keyValueItem.key}`, 'g');
-      result = result.replace(tempRegex, keyValueItem.value);
+  if (Object.keys(keyValueObject) && Object.keys(keyValueObject).length > 0 && Object.keys(keyValueObject) instanceof Array) {
+    Object.keys(keyValueObject).forEach((keyValueItem) => {
+      const tempRegex = new RegExp(`${keyValueItem}`, 'g');
+      result = result.replace(tempRegex, keyValueObject.keyValueItem);
     });
   }
 

@@ -1,5 +1,6 @@
 const express = require("express");
 const success = require("../../middleware/success");
+const validation = require("../../middleware/validation");
 const sendMail = require("../../../core/mail");
 const sendPushNotification = require("../../../core/push");
 const { bodyManipulation } = require("../../../core/commonUtils");
@@ -24,6 +25,7 @@ router.get(
 
 router.post(
   "/mail",
+  validation.sendMailValidation,
   (req, res, next) => {
     const { service, username, password, from, to, subject, text, keyValue } =
       req.body;
@@ -58,6 +60,7 @@ router.post(
 
 router.post(
   "/push",
+  validation.sendPushNotificationValidation,
   (req, res, next) => {
     const { registrationToken, message, title } = req.body;
 
@@ -65,24 +68,24 @@ router.post(
       registrationToken,
       message,
       title,
-    });
-    // .then((mailResponse) => {
-    //   if (mailResponse.messageId) {
-    //     res.locals = {
-    //       code: 200,
-    //       data: mailResponse,
-    //       message: `Mail sent successfully to ${to}`,
-    //     };
-    next();
-    //   }
+    })
+      .then((pushResponse) => {
+        console.log('pushResponse',pushResponse)
+        // if (mailResponse.messageId) {
+        //   res.locals = {
+        //     code: 200,
+        //     data: mailResponse,
+        //     message: `Mail sent successfully to ${to}`,
+        //   };
+          next();
+        // }
 
-    //   next(new Error('Mail not sent'));
-    // })
-    // .catch((err) => {
-    //   next(err);
-    // });
-  },
-  success.handler
+        // next(new Error("Mail not sent"));
+      })
+      .catch((err) => {
+        next(err);
+      });
+  }
 );
 
 module.exports = router;

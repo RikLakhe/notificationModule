@@ -22,21 +22,15 @@ const sendPushNotification = async (pushOptions) => {
 
   const message_notification = {
     notification: {
-       title: title,
-       body: message
-           },
-           token: registrationToken
-    };
+      title: title,
+      body: message,
+    },
+    token: registrationToken,
+  };
 
   return admin
     .messaging()
     .send(message_notification)
-    .then((response) => {
-      console.log("Notification sent successfully");
-    })
-    .catch((error) => {
-      console.log(error);
-    });
 };
 
 module.exports = sendPushNotification;
