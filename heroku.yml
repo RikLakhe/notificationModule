@@ -1,0 +1,8 @@
+build:
+  docker:
+    web: Dockerfile
+  config:
+    NODE_ENV: development
+    is_debug: true
+run:
+  web: npm start
