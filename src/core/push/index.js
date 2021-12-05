@@ -13,24 +13,26 @@ const notification_options = {
 };
 
 const sendPushNotification = async (pushOptions) => {
-  const {
-    registrationToken,
-    message,
-    title,
-    // options = notification_options,
-  } = pushOptions;
+  const { registrationToken, message, title } = pushOptions;
 
   const message_notification = {
+    data: {
+      title: title,
+      body: message,
+    },
     notification: {
       title: title,
       body: message,
     },
-    token: registrationToken,
   };
 
   return admin
     .messaging()
-    .send(message_notification)
+    .sendToDevice(
+      registrationToken,
+      message_notification,
+      notification_options
+    );
 };
 
 module.exports = sendPushNotification;
